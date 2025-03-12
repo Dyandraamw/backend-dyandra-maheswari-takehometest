@@ -63,13 +63,3 @@ ALTER TABLE "purchase_items" ADD CONSTRAINT "purchase_items_fk1" FOREIGN KEY ("p
 
 ALTER TABLE "purchase_items" ADD CONSTRAINT "purchase_items_fk2" FOREIGN KEY ("product_id") REFERENCES "products"("product_id") ON DELETE CASCADE;
 `;
-
-// export const addForeignKeys = `
-// ALTER TABLE order_items DROP CONSTRAINT order_items_fk1;
-
-// ALTER TABLE order_items DROP CONSTRAINT order_items_fk2;
-
-// ALTER TABLE purchase_items DROP CONSTRAINT purchase_items_fk1;
-
-// ALTER TABLE purchase_items DROP CONSTRAINT purchase_items_fk2;
-// ;`;
