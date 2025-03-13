@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import database from "../db";
+import database from "../db/index.js";
 import { config } from "dotenv";
 
 config();

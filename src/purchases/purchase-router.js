@@ -6,7 +6,7 @@ import {
   findAllPurchase,
   findPurchaseDetail,
   findPurchaseItemsDetail,
-} from "./purchase-query";
+} from "./purchase-query.js";
 
 const router = Router();
 
@@ -69,13 +69,19 @@ router.get("/detail/:purchase_id", async (req, res) => {
   try {
     const purchase = await findPurchaseDetail({ purchase_id });
     const purchase_items = await findPurchaseItemsDetail({ purchase_id });
+    let total_gross = 0.0;
+    purchase_items.forEach((item) => {
+      total_gross += parseFloat(item.total_per_item);
+    });
+
+    const total_nett = total_gross + parseFloat(purchase.shipping_fee) - parseFloat(purchase.discount);
     const data = {
       purchase,
       purchase_items: purchase_items,
+      total_gross: total_gross,
+      total_nett: total_nett,
     };
-    return res
-      .status(201)
-      .json({ message: "Sucessfully fetched purchase", data });
+    return res.status(201).json({ message: "Sucessfully fetched purchase", data });
   } catch (error) {
     console.log(error);
     return res

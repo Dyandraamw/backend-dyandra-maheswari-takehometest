@@ -1,5 +1,13 @@
-import database from "..";
-import { addForeignKeys, createOrderItemsTable, createOrdersTable, createProductsTable, createPurchaseItemsTable, createPurchasesTable, createUsersTable } from "./create_tables";
+import database from "../index.js";
+import {
+  addForeignKeys,
+  createOrderItemsTable,
+  createOrdersTable,
+  createProductsTable,
+  createPurchaseItemsTable,
+  createPurchasesTable,
+  createUsersTable,
+} from "./create_tables.js";
 
 const MigrateDB = async () => {
   const connection = await database.connect();

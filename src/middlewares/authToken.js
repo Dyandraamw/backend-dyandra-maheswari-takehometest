@@ -4,9 +4,9 @@ import { config } from "dotenv";
 config();
 
 async function authToken(req, res, next) {
-//   if (req.method === "OPTIONS") {
-//     return next();
-//   }
+  //   if (req.method === "OPTIONS") {
+  //     return next();
+  //   }
 
   // console.log(req.headers.authorization);
   try {

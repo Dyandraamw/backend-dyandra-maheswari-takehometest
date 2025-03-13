@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import database from "../db";
+import database from "../db/index.js";
 import { hashSync } from "bcrypt";
 import { config } from "dotenv";
 
@@ -40,4 +40,4 @@ const findUser = async ({ email }) => {
   return res.rows[0];
 };
 
-export { createUser,findUser };
+export { createUser, findUser };

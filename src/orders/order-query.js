@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
-import database from "../db";
+import database from "../db/index.js";
 import { config } from "dotenv";
-import { updateStock } from "../products/product-query";
+import { updateStock } from "../products/product-query.js";
 
 config();
 
@@ -77,7 +77,7 @@ const findAllOrder = async () => {
 
 const findOrderDetail = async ({ order_id }) => {
   const query = `
-            SELECT * FROM
+            SELECT *  FROM
                 orders
             WHERE
               order_id = $1
@@ -91,9 +91,12 @@ const findOrderDetail = async ({ order_id }) => {
 
 const findOrderItemsDetail = async ({ order_id }) => {
   const query = `
-            SELECT * FROM order_items
+            SELECT *,
+             SUM(products.product_price * order_items.item_quantity) AS total_per_item
+            FROM order_items
                  JOIN products ON products.product_id = order_items.product_id
             WHERE order_id = $1
+            GROUP BY order_items.order_item_id, products.product_id 
             ORDER BY order_item_id ASC 
           ;`;
 

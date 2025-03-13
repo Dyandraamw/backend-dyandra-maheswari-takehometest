@@ -6,7 +6,7 @@ import {
   findAllProductsDropdown,
   findProductDetail,
   updateProduct,
-} from "./product-query";
+} from "./product-query.js";
 
 const router = Router();
 
@@ -53,7 +53,11 @@ router.get("/", async (req, res) => {
 router.get("/detail/:product_id", async (req, res) => {
   const { product_id } = req.params;
   try {
-    const data = await findProductDetail({ product_id });
+    let data = await findProductDetail({ product_id });
+    data = {
+      ...data,
+      stock_updated_at: new Date(data.stock_updated_at).toLocaleDateString(),
+    };
     return res
       .status(201)
       .json({ message: "Sucessfully fetched product", data });
@@ -79,6 +83,9 @@ router.put("/detail/:product_id", async (req, res) => {
     product_weight,
     product_price,
   } = req.body;
+
+  console.log(user_type)
+  console.log(req.body)
   try {
     const data = await updateProduct({
       product_id,

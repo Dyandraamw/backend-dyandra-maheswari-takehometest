@@ -6,7 +6,7 @@ import {
   findAllOrder,
   findOrderDetail,
   findOrderItemsDetail,
-} from "./order-query";
+} from "./order-query.js";
 
 const router = Router();
 
@@ -67,9 +67,17 @@ router.get("/detail/:order_id", async (req, res) => {
   try {
     const order = await findOrderDetail({ order_id });
     const order_items = await findOrderItemsDetail({ order_id });
+    let total_gross = 0.0;
+    order_items.forEach((item) => {
+      total_gross += parseFloat(item.total_per_item);
+    });
+
+    const total_nett = total_gross + parseFloat(order.shipping_fee) - parseFloat(order.discount);
     const data = {
       order,
       order_items: order_items,
+      total_gross: total_gross,
+      total_nett: total_nett,
     };
     return res.status(201).json({ message: "Sucessfully fetched order", data });
   } catch (error) {

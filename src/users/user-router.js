@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { createUser, findUser } from "./user-query";
+import { createUser, findUser } from "./user-query.js";
 import { compareSync } from "bcrypt";
-import pkg from 'jsonwebtoken';
+import pkg from "jsonwebtoken";
 const { sign } = pkg;
 
 const router = Router();
@@ -24,22 +24,27 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   const { email, password } = req.body;
   let user = await findUser({ email });
+  // console.log(email)
 
   if (!user || !compareSync(password, user.password)) {
-    return res.status(403).json({ message: 'Email or password is incorrect' });
+    return res
+      .status(403)
+      .json({ auth: false, message: "Email or password is incorrect" });
   }
 
   const token = sign(
     {
+      user_name: user.name,
       user_id: user.user_id,
       user_type: user.user_type,
     },
     process.env.JWT_SECRET,
-    { expiresIn: '1d' }
+    { expiresIn: "1d" }
   );
 
   return res.status(200).json({
-    message: 'Successfully logged in user',
+    auth: true,
+    message: "Successfully logged in user",
     data: {
       token: token,
     },
