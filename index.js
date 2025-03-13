@@ -21,6 +21,15 @@ async function runServer() {
   app.use("/purchases", authToken, purchaseRouter);
   app.use("/orders", authToken, orderRouter);
 
+  app.get("/test", async (req, res) => {
+    
+      return res
+        .status(201)
+        .json({ message: "test run app" });
+  
+    
+  });
+
   app.listen(PORT, (error) => {
     if (!error) {
       console.log(
