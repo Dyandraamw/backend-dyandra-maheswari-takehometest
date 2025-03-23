@@ -1,1 +1,5 @@
 .vercel
+.env
+app.yaml
+node_modules
+.gcloudignore

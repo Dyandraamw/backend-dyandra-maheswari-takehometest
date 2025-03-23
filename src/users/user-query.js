@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 import database from "../db/index.js";
-import { hashSync } from "bcrypt";
+import { hashSync } from "bcryptjs";
 import { config } from "dotenv";
 
 config();

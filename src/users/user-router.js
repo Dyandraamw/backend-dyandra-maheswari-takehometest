@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createUser, findUser } from "./user-query.js";
-import { compareSync } from "bcrypt";
+import { compareSync } from "bcryptjs";
 import pkg from "jsonwebtoken";
 const { sign } = pkg;
 
